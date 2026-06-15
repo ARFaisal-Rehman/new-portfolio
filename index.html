@@ -1,38 +1,768 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abdul Rehman Faisal | Curiosity Cabinet</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Field Notes — Abdul Rehman Faisal</title>
+<meta name="description" content="Field notes from a data science student — projects, experience, and a few hidden surprises." />
+
+<!--
+  HOW TO MAKE THIS YOURS
+  ======================
+  1) HANDWRITING: every font-family: var(--font-hand) spot is a PLACEHOLDER
+     script font (Caveat). Once you send scanned samples of your own
+     handwriting, swap these for cropped PNG/SVG images of your real
+     writing — title, checkmarks, margin notes, signature on the
+     contact page. Happy to wire that up once you have them.
+
+  2) SCREENSHOTS: each project page has a .polaroid placeholder —
+     drop in <img src="..."> tags where noted.
+
+  3) LINKS: update the contact page (last page) with your real socials —
+     phone number currently omitted on purpose (privacy on a public site).
+
+  4) NAVIGATE: scroll / swipe / arrow keys / on-screen arrows.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F2E8D5;
+    --paper-back:#E6DAC2;
+    --ink:#2E2A24;
+    --ink-soft:#7A7165;
+    --pen-blue:#3A538C;
+    --pen-red:#B6432F;
+    --highlighter:#F4DE5A;
+    --sticky-peach:#F3C89A;
+    --sticky-edge:#E0AE78;
+    --binding:#A0937E;
+    --shadow:rgba(40,34,24,0.28);
+
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-hand:'Caveat', cursive; /* PLACEHOLDER for real handwriting */
+    --font-mono:'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+
+  body{
+    font-family:var(--font-body);
+    background:radial-gradient(ellipse at top, #DED2BC 0%, #C7B89E 60%, #B7A689 100%);
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh; overflow:hidden; color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .grain{
+    position:fixed; inset:0; pointer-events:none; opacity:.5; mix-blend-mode:multiply; z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* ===================== STAGE / NOTEBOOK ===================== */
+  .stage{ position:relative; z-index:1; perspective:2400px; width:min(94vw, 900px); aspect-ratio:4/3; }
+
+  .spiral{
+    position:absolute; left:-16px; top:10px; bottom:10px; width:30px; z-index:30;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='38'%3E%3Cpath d='M5 19a10 14 0 0 1 20 0' fill='none' stroke='%238C8275' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='15' cy='19' r='6.5' fill='%23F2E8D5' stroke='%23B9AE9A' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat:repeat-y; background-size:30px 38px;
+    filter:drop-shadow(2px 2px 2px rgba(0,0,0,.15));
+  }
+
+  .page-progress{
+    position:absolute; top:-12px; right:22px; z-index:31;
+    background:var(--sticky-peach); border:1px solid var(--sticky-edge);
+    font-family:var(--font-mono); font-size:.7rem; padding:5px 10px;
+    transform:rotate(2deg); box-shadow:1px 2px 4px rgba(0,0,0,.12);
+  }
+
+  .pages{ position:relative; width:100%; height:100%; }
+
+  .page{
+    position:absolute; inset:0; background:var(--paper); border-radius:8px;
+    box-shadow:0 24px 60px var(--shadow);
+    padding:clamp(26px,4vw,54px) clamp(26px,4vw,54px) clamp(26px,4vw,54px) clamp(46px,7vw,76px);
+    transform-style:preserve-3d; backface-visibility:hidden;
+    transform-origin:left center; transform:rotateY(0deg);
+    transition:transform 1s cubic-bezier(.45,.05,.2,1), box-shadow 1s ease;
+    overflow:hidden;
+  }
+  .page.flipped{ transform:rotateY(-152deg); box-shadow:-40px 14px 70px var(--shadow); }
+
+  .page-back{
+    position:absolute; inset:0; background:var(--paper-back); border-radius:8px;
+    transform:rotateY(180deg); backface-visibility:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .page-back::after{
+    content:attr(data-label); font-family:var(--font-mono); font-size:.65rem;
+    color:var(--ink-soft); letter-spacing:.25em; text-transform:uppercase;
+  }
+
+  .page-scroll{ height:100%; overflow-y:auto; padding-right:6px; }
+  .page-scroll::-webkit-scrollbar{ width:4px; }
+  .page-scroll::-webkit-scrollbar-thumb{ background:var(--binding); border-radius:4px; }
+
+  /* ===================== SHARED TYPE ===================== */
+  .lab-header{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(1.4rem,3.2vw,2.1rem);
+    margin:0 0 .25em 0; border-bottom:2px solid var(--ink); display:inline-block; padding-bottom:4px;
+  }
+  .lab-meta{ font-family:var(--font-mono); font-size:.8rem; color:var(--ink-soft); line-height:1.85; margin:12px 0 18px; }
+  .lab-meta b{ color:var(--ink); }
+  .check{ font-family:var(--font-hand); font-size:1.2rem; color:var(--pen-blue); margin-right:2px; }
+  .subhead{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; margin:18px 0 8px; border-left:3px solid var(--pen-blue); padding-left:8px; }
+
+  .lab-body{ font-family:var(--font-body); font-size:clamp(.92rem,1.5vw,1.02rem); line-height:1.75; max-width:60ch; color:var(--ink); }
+
+  .notes-list{ list-style:none; padding-left:0; font-family:var(--font-body); font-size:.95rem; line-height:1.75; max-width:58ch; }
+  .notes-list li{ padding-left:1.4em; position:relative; margin-bottom:.5em; }
+  .notes-list li::before{ content:"—"; position:absolute; left:0; color:var(--pen-blue); font-family:var(--font-hand); font-weight:700; }
+
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px; }
+  .tag{ font-family:var(--font-mono); font-size:.7rem; background:#fff; border:1px solid var(--ink-soft); border-radius:3px; padding:3px 9px; transform:rotate(-1deg); }
+  .tag:nth-child(even){ transform:rotate(1deg); }
+
+  .proj-text{ max-width:58%; }
+
+  .highlight{ position:relative; cursor:help; }
+  .highlight::before{
+    content:""; position:absolute; left:-2px; right:-2px; bottom:1px; top:30%;
+    background:var(--highlighter); z-index:-1; transform:scaleX(0); transform-origin:left;
+    transition:transform .5s cubic-bezier(.5,0,.2,1); opacity:.65;
+  }
+  .highlight:hover::before, .highlight:focus::before{ transform:scaleX(1); }
+  .highlight .tip{
+    position:absolute; left:0; top:100%; margin-top:8px; font-family:var(--font-hand); font-size:1.05rem;
+    color:var(--pen-red); white-space:nowrap; opacity:0; transform:translateY(-4px);
+    transition:opacity .35s ease .15s, transform .35s ease .15s; pointer-events:none;
+  }
+  .highlight:hover .tip, .highlight:focus .tip{ opacity:1; transform:translateY(0); }
+
+  .secret-note{
+    font-family:var(--font-hand); font-size:clamp(1.05rem,2.2vw,1.4rem); color:var(--pen-blue);
+    opacity:0; transform:translateY(6px); transition:opacity .5s ease, transform .5s ease; pointer-events:none;
+  }
+  .secret-note.show{ opacity:1; transform:translateY(0); }
+
+  /* ===================== POLAROID ===================== */
+  .polaroid{
+    position:absolute; top:78px; right:36px; width:clamp(120px,16vw,180px);
+    background:#fff; padding:8px 8px 22px; box-shadow:2px 4px 12px rgba(0,0,0,.18);
+    transform:rotate(3deg); z-index:2;
+  }
+  .polaroid .frame{ width:100%; aspect-ratio:4/3; background:repeating-linear-gradient(45deg,#d8cdb8,#d8cdb8 6px,#cbbfa6 6px,#cbbfa6 12px); }
+  .polaroid .cap{ font-family:var(--font-hand); font-size:.95rem; text-align:center; margin-top:6px; color:var(--ink-soft); }
+  .tape{ position:absolute; width:54px; height:20px; background:rgba(255,255,255,.55); top:-8px; left:50%; transform:translateX(-50%) rotate(-3deg); box-shadow:0 1px 2px rgba(0,0,0,.1); }
+
+  /* ===================== COVER PAGE ===================== */
+  .page--cover{ display:flex; flex-direction:column; }
+  .cover-label{
+    align-self:flex-start; font-family:var(--font-mono); font-size:.7rem; letter-spacing:.12em;
+    background:var(--sticky-peach); border:1px solid var(--sticky-edge); padding:6px 12px;
+    transform:rotate(-2deg); box-shadow:1px 2px 4px rgba(0,0,0,.12);
+  }
+  .cover-main{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:clamp(8px,1.5vw,16px); }
+  .hand-title{
+    font-family:var(--font-hand); font-weight:700; font-size:clamp(2.8rem,9vw,6rem);
+    line-height:1; color:var(--ink); position:relative; display:inline-block; transform:rotate(-1.5deg);
+  }
+  .hand-title .reveal{ display:inline-block; clip-path:inset(0 100% 0 0); animation:writeIn 1.6s .4s cubic-bezier(.6,0,.3,1) forwards; }
+  @keyframes writeIn{ to{ clip-path:inset(0 0% 0 0); } }
+  .pen-tip{
+    position:absolute; top:-6px; left:0; font-size:clamp(1.3rem,3vw,1.9rem);
+    transform:translateX(-10px) rotate(35deg); animation:penMove 1.6s .4s cubic-bezier(.6,0,.3,1) forwards; opacity:0;
+  }
+  @keyframes penMove{ 0%{opacity:1; left:0;} 95%{opacity:1;} 100%{opacity:0; left:100%;} }
+  .subtitle{ font-family:var(--font-mono); font-size:clamp(.78rem,1.6vw,1rem); color:var(--ink-soft); letter-spacing:.04em; border-left:3px solid var(--pen-blue); padding-left:10px; }
+
+  .coffee-stain{ position:absolute; right:clamp(20px,5vw,60px); bottom:clamp(70px,12vh,110px); width:clamp(64px,11vw,110px); height:clamp(64px,11vw,110px); cursor:pointer; transition:transform .5s ease; z-index:4; }
+  .coffee-stain svg{ width:100%; height:100%; display:block; opacity:.35; }
+  .coffee-stain.spread{ transform:scale(1.5) rotate(8deg); }
+  .cover .secret-note{ position:absolute; right:clamp(10px,4vw,40px); bottom:clamp(8px,5vh,32px); max-width:200px; text-align:right; transform:rotate(-4deg); }
+  .cover .secret-note.show{ transform:rotate(-4deg) translateY(-6px); }
+
+  .nav-hint{ font-family:var(--font-mono); font-size:.75rem; color:var(--ink-soft); display:flex; align-items:center; gap:8px; align-self:flex-end; }
+  .nav-hint .arrow{ display:inline-block; animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge{ 0%,100%{transform:translateX(0);} 50%{transform:translateX(6px);} }
+
+  /* ===================== ABOUT PAGE EXTRAS ===================== */
+  .sticky-wrap{ position:absolute; right:clamp(18px,4vw,40px); top:clamp(60px,10vh,90px); z-index:5; }
+  .sticky{
+    width:clamp(130px,16vw,170px); background:var(--sticky-peach); border:1px solid var(--sticky-edge);
+    box-shadow:2px 4px 10px rgba(0,0,0,.15); padding:14px 12px 18px; font-family:var(--font-hand);
+    font-size:clamp(1rem,2vw,1.25rem); color:var(--ink); transform:rotate(4deg) translateY(-46px);
+    transition:transform .7s cubic-bezier(.34,1.56,.64,1), opacity .4s ease; opacity:0;
+  }
+  .sticky.dropped{ transform:rotate(4deg) translateY(0); opacity:1; }
+  .paperclip{ position:absolute; top:-14px; left:18px; width:32px; height:50px; cursor:pointer; transition:transform .5s cubic-bezier(.5,-0.4,.5,1.4); transform-origin:top center; z-index:6; }
+  .paperclip.off{ transform:translate(60px,-30px) rotate(70deg); opacity:0; }
+  .paperclip svg{ width:100%; height:100%; }
+
+  .dogear{ position:absolute; right:0; bottom:0; width:64px; height:64px; cursor:pointer; z-index:5; }
+  .dogear .fold{ position:absolute; right:0; bottom:0; width:0; height:0; border-style:solid; border-width:0 0 64px 64px; border-color:transparent transparent var(--paper-back) transparent; transition:transform .6s cubic-bezier(.34,1.4,.64,1); transform-origin:bottom right; filter:drop-shadow(-2px -2px 4px rgba(0,0,0,.15)); }
+  .dogear.open .fold{ transform:translate(54px,54px) rotate(0deg) scale(1.6); }
+  .secret-panel{ position:absolute; right:14px; bottom:14px; max-width:190px; font-family:var(--font-hand); font-size:1.1rem; color:var(--ink-soft); text-align:right; opacity:0; transform:translateY(8px); transition:opacity .5s ease .2s, transform .5s ease .2s; z-index:4; }
+  .secret-panel.show{ opacity:1; transform:translateY(0); }
+
+  /* ===================== SKILLS FLIP CARDS ===================== */
+  .skills-hint{ font-family:var(--font-hand); font-size:1.2rem; color:var(--pen-blue); margin:6px 0 14px; }
+  .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:560px; }
+  .flip-card{ perspective:1000px; height:118px; cursor:pointer; }
+  .flip-inner{ position:relative; width:100%; height:100%; transition:transform .6s; transform-style:preserve-3d; }
+  .flip-card.is-flipped .flip-inner{ transform:rotateY(180deg); }
+  .flip-face{ position:absolute; inset:0; backface-visibility:hidden; border:1px solid var(--ink-soft); border-radius:6px; padding:12px; }
+  .flip-front{ background:#fff; display:flex; flex-direction:column; }
+  .flip-front h4{ font-family:var(--font-display); font-size:.88rem; margin:0 0 6px; }
+  .flip-front .chips{ font-family:var(--font-mono); font-size:.66rem; color:var(--ink-soft); line-height:1.6; }
+  .flip-back{ transform:rotateY(180deg); background:var(--sticky-peach); display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--font-hand); font-size:1.05rem; }
+
+  /* ===================== EXPERIENCE STAMP ===================== */
+  .stamp-wrap{ position:absolute; right:30px; top:30px; text-align:center; cursor:pointer; z-index:5; }
+  .stamp{
+    font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--pen-red);
+    border:4px solid var(--pen-red); border-radius:8px; padding:10px 16px; letter-spacing:.1em;
+    transform:rotate(-12deg) scale(.001); opacity:0; transition:transform .4s cubic-bezier(.34,1.6,.64,1), opacity .2s;
+  }
+  .stamp.stamped{ transform:rotate(-12deg) scale(1); opacity:.85; }
+  .stamp-hint{ font-family:var(--font-mono); font-size:.65rem; color:var(--ink-soft); margin-top:6px; }
+  .accuracy{ font-family:var(--font-hand); font-size:clamp(2rem,5vw,2.6rem); color:var(--pen-blue); margin-top:6px; }
+
+  /* ===================== PROJECT EASTER EGGS ===================== */
+  .droplet{ width:36px; cursor:pointer; margin:14px 0 6px; display:block; }
+  .coffee-ring{ width:46px; height:46px; cursor:pointer; margin:14px 0 6px; opacity:.45; }
+  .churn-row{ display:flex; align-items:center; gap:18px; margin-top:18px; position:relative; height:50px; }
+  .customer{ font-size:1.9rem; transition:transform 1.1s ease, opacity 1.1s ease; }
+  .customer.left{ transform:translateX(140px); opacity:0; }
+  .retain-btn{ font-family:var(--font-mono); font-size:.72rem; border:1px solid var(--ink); background:transparent; padding:6px 12px; cursor:pointer; border-radius:4px; }
+  .retain-btn:hover{ background:var(--ink); color:var(--paper); }
+
+  .play-btn{ width:44px; height:44px; border-radius:50%; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; background:#fff; margin-top:10px; position:relative; }
+  .note-float{ position:absolute; font-size:1.3rem; color:var(--pen-blue); left:50%; top:0; animation:floatUp 1.8s ease-out forwards; pointer-events:none; }
+  @keyframes floatUp{ to{ transform:translate(-50%, -90px) translateX(var(--dx,0)) rotate(20deg); opacity:0; } }
+
+  /* ===================== BADGES ===================== */
+  .badge-grid{ display:flex; flex-wrap:wrap; gap:18px; margin-top:14px; }
+  .badge{ width:80px; height:80px; border-radius:50%; border:3px dashed var(--pen-blue); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:.6rem; text-align:center; cursor:pointer; position:relative; padding:6px; line-height:1.3; }
+  .badge.shine::after{ content:"✦"; position:absolute; top:-10px; right:-6px; font-size:1.3rem; color:#E0A33A; animation:sparkle .7s ease; }
+  @keyframes sparkle{ from{transform:scale(0) rotate(0); opacity:1;} to{transform:scale(1.5) rotate(120deg); opacity:0;} }
+
+  .sample-list{ display:flex; flex-direction:column; gap:8px; margin-top:10px; max-width:60ch; }
+  .sample-card{ font-family:var(--font-body); font-size:.85rem; background:#fff; border:1px solid var(--ink-soft); border-radius:5px; padding:10px 12px; transform:rotate(-.4deg); }
+  .sample-card:nth-child(even){ transform:rotate(.4deg); }
+
+  /* ===================== CONTACT PAGE ===================== */
+  .contact-grid{ display:flex; flex-direction:column; gap:10px; margin-top:18px; font-family:var(--font-mono); font-size:.95rem; }
+  .contact-grid a{ color:var(--pen-blue); text-decoration:none; border-bottom:1px dashed var(--pen-blue); }
+  .contact-grid a:hover{ color:var(--pen-red); }
+  .hire-stamp-wrap{ position:absolute; right:40px; bottom:50px; text-align:center; cursor:pointer; }
+  .hire-stamp{
+    font-family:var(--font-display); font-weight:700; border:5px solid var(--pen-red); color:var(--pen-red);
+    padding:12px 20px; border-radius:10px; font-size:.85rem; letter-spacing:.08em;
+    transform:rotate(-8deg) scale(.001); opacity:0; transition:transform .5s cubic-bezier(.34,1.6,.64,1), opacity .2s;
+  }
+  .hire-stamp.stamped{ transform:rotate(-8deg) scale(1); opacity:.85; }
+  .signature{ font-family:var(--font-hand); font-size:2.2rem; color:var(--ink); margin-top:24px; transform:rotate(-2deg); display:inline-block; }
+
+  /* ===================== NAV / MASCOT ===================== */
+  .flip-btn{
+    position:absolute; bottom:clamp(14px,3vh,28px); width:42px; height:42px; border-radius:50%;
+    border:2px solid var(--ink); background:transparent; color:var(--ink); font-family:var(--font-hand);
+    font-size:1.4rem; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:40;
+    transition:background .2s ease, transform .15s ease, opacity .2s ease;
+  }
+  .flip-btn:hover{ background:var(--ink); color:var(--paper); transform:scale(1.06); }
+  .flip-btn:focus-visible{ outline:3px solid var(--pen-blue); outline-offset:2px; }
+  .flip-btn[data-hidden="true"]{ opacity:0; pointer-events:none; }
+  .flip-next{ right:clamp(14px,3vw,28px); }
+  .flip-prev{ left:clamp(46px,7vw,86px); }
+
+  .mascot{ position:absolute; left:clamp(44px,6vw,70px); bottom:clamp(58px,9vh,90px); width:clamp(66px,9vw,92px); z-index:35; cursor:pointer; transition:transform .25s ease; }
+  .mascot:hover{ transform:translateY(-4px) rotate(-4deg); }
+  .mascot.bounce{ animation:mascotBounce .6s ease; }
+  @keyframes mascotBounce{ 0%,100%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-14px) rotate(-8deg);} 55%{transform:translateY(2px) rotate(4deg);} }
+  .mascot .eye{ animation:blink 5s infinite; transform-origin:center; }
+  @keyframes blink{ 0%,92%,100%{transform:scaleY(1);} 95%{transform:scaleY(.1);} }
+  .mascot .steam path{ animation:steam 2.6s ease-in-out infinite; transform-origin:bottom center; }
+  .mascot .steam path:nth-child(2){ animation-delay:.4s; }
+  @keyframes steam{ 0%{opacity:0; transform:translateY(4px) scale(.9);} 40%{opacity:.7;} 100%{opacity:0; transform:translateY(-10px) scale(1.1);} }
+  .speech{
+    position:absolute; bottom:110%; left:50%; transform:translateX(-50%) translateY(6px) scale(.9);
+    background:var(--paper); border:1px solid var(--ink-soft); border-radius:10px; padding:8px 12px;
+    font-family:var(--font-hand); font-size:1rem; white-space:nowrap; box-shadow:2px 3px 8px rgba(0,0,0,.15);
+    opacity:0; transition:opacity .3s ease, transform .3s ease; pointer-events:none;
+  }
+  .speech.show{ opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width:640px){
+    .stage{ aspect-ratio:3/4.6; width:92vw; }
+    .flip-prev{ left:clamp(14px,3vw,28px); bottom:auto; top:14px; }
+    .flip-next{ bottom:14px; }
+    .sticky-wrap{ top:auto; bottom:120px; right:14px; }
+    .mascot{ left:16px; bottom:16px; width:58px; }
+    .polaroid{ position:static; margin:14px auto; transform:rotate(0deg); width:60%; }
+    .proj-text{ max-width:100%; }
+    .skills-grid{ grid-template-columns:1fr 1fr; }
+    .stamp-wrap, .hire-stamp-wrap{ position:static; margin-top:16px; text-align:left; }
+    .stamp, .hire-stamp{ transform:rotate(-6deg) scale(.001); }
+    .stamp.stamped, .hire-stamp.stamped{ transform:rotate(-6deg) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+</style>
 </head>
 <body>
-<header class="hero">
-<h1>Inside the Mind of a Data Scientist</h1>
-<p>Every dataset tells a story. I've spent the last few years learning how to read them.</p>
-</header>
 
-<section class="grid">
-<div class="card"><h2>📓 Research Journal</h2><p>Germany internship, AI research, and lessons learned.</p></div>
-<div class="card"><h2>🌍 Global Explorer</h2><p>Research journey from GIKI to Germany.</p></div>
-<div class="card"><h2>💻 Project Vault</h2><p>Water Crisis, Churn Predictor, SoundMate, Luminate.</p></div>
-<div class="card"><h2>🏆 Achievement Cabinet</h2><p>McKinsey Forward, Deloitte, Leadership.</p></div>
-<div class="card"><h2>🏸 Beyond Tech</h2><p>Badminton captain and student leader.</p></div>
-<div class="card secret" onclick="unlock()">🦆 Find the Duck</div>
-</section>
+<div class="grain"></div>
 
-<section class="timeline">
-<h2>Timeline</h2>
-<ul>
-<li>2023 - Started BS Data Science at GIKI</li>
-<li>2025 - Research Internship in Germany</li>
-<li>2025-26 - AI/ML Research Projects</li>
-<li>2026 - Data Visualization & Analytics Projects</li>
-</ul>
-</section>
+<div class="stage">
+  <div class="spiral"></div>
+  <div class="page-progress" id="progress">1 / 10</div>
 
-<div id="easter"></div>
+  <div class="pages" id="pages">
 
-<script src="script.js"></script>
+    <!-- ============ PAGE 1: COVER ============ -->
+    <section class="page page--cover cover" aria-label="Cover">
+      <div class="page-back" data-label="front cover"></div>
+
+      <div class="cover-label">PROPERTY OF: Abdul Rehman Faisal</div>
+
+      <div class="cover-main">
+        <h1 class="hand-title">
+          <span class="reveal">Field&nbsp;Notes</span>
+          <span class="pen-tip">✏️</span>
+        </h1>
+        <p class="subtitle">data science @ GIKI — turning datasets into decisions (and coffee into code)</p>
+      </div>
+
+      <div class="coffee-stain" id="stain" role="button" tabindex="0" aria-label="A coffee stain. Curious?">
+        <svg viewBox="0 0 120 120"><path fill="#7A4A1F" d="M60 8c26 0 48 18 50 40 2 24-18 44-46 50-30 6-56-10-58-36C4 38 26 8 60 8Z"/></svg>
+      </div>
+      <div class="secret-note" id="secretNote">3am thought: what if I just<br>became a barista?</div>
+
+      <div class="nav-hint">scroll · swipe · or press → <span class="arrow">➜</span></div>
+    </section>
+
+    <!-- ============ PAGE 2: ABOUT ============ -->
+    <section class="page" aria-label="About">
+      <div class="page-back" data-label="page 2 / 10"></div>
+      <h2 class="lab-header">Subject: Abdul Rehman Faisal</h2>
+      <div class="lab-meta">
+        <b>FIELD:</b> BS Data Science, GIKI (2023 – Present)<br>
+        <b>BASE:</b> Lahore, Pakistan<br>
+        <b>STATUS:</b>
+        <span class="check">☑</span> Caffeinated &nbsp;
+        <span class="check">☑</span> Curious &nbsp;
+        <span class="check">☑</span> McKinsey-approved &nbsp;
+        <span class="check">☐</span> Sleeping on schedule
+      </div>
+
+      <p class="lab-body">
+        Most of my week goes into cleaning data, building models, and occasionally
+        negotiating with scikit-learn until it cooperates. Last summer I took that
+        habit abroad — a research internship in Potsdam, Germany, where a computer
+        vision model of mine hit <span class="highlight" tabindex="0">99.93% validation accuracy<span class="tip">(I will mention this at every opportunity)</span></span>.
+        McKinsey's Forward Program apparently agrees I'm decent at solving problems,
+        and somewhere along the way I picked up enough front-end curiosity to build
+        this very notebook. If you're hiring for a data role — or just enjoy clicking
+        on things — you're in the right place.
+      </p>
+
+      <div class="sticky-wrap">
+        <div class="sticky" id="sticky">honestly? this took<br>way longer than<br>the actual model.</div>
+        <div class="paperclip" id="clip" role="button" tabindex="0" aria-label="A paperclip. Try clicking it.">
+          <svg viewBox="0 0 34 54" fill="none" stroke="#7A8AA8" stroke-width="4" stroke-linecap="round">
+            <path d="M17 4v34a8 8 0 0 1-16 0V14a5 5 0 0 1 10 0v22"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="dogear" id="dogear" role="button" tabindex="0" aria-label="A folded page corner. Try clicking it."><div class="fold"></div></div>
+      <div class="secret-panel" id="secretPanel">also fluent in turning<br>coffee into code.</div>
+    </section>
+
+    <!-- ============ PAGE 3: SKILLS ============ -->
+    <section class="page" aria-label="Skills">
+      <div class="page-back" data-label="page 3 / 10"></div>
+      <h2 class="lab-header">The Toolbox</h2>
+      <p class="skills-hint">tap a card to see what I really think →</p>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </section>
+
+    <!-- ============ PAGE 4: EXPERIENCE ============ -->
+    <section class="page" aria-label="Experience">
+      <div class="page-back" data-label="page 4 / 10"></div>
+      <h2 class="lab-header">Field Assignment: Potsdam, Germany</h2>
+      <div class="lab-meta">
+        <b>ROLE:</b> Research Intern — AI &amp; Data Science<br>
+        <b>ORG:</b> University of Europe for Applied Sciences<br>
+        <b>DURATION:</b> May – Aug 2025
+      </div>
+      <ul class="notes-list">
+        <li>Built computer vision models reaching 99.93% validation accuracy — cut the error rate by 60%+ through systematic hyperparameter tuning</li>
+        <li>Automated end-to-end ETL pipelines for image preprocessing, cutting manual prep time by roughly 70%</li>
+        <li>Ran EDA on large datasets with SQL &amp; Pandas — catching data quality issues before they became data quality emergencies</li>
+        <li>Wrote analytical reports translating model results for non-technical stakeholders (no jargon, mostly)</li>
+        <li>Collaborated with international researchers across disciplines, somehow without a single merge-conflict disaster</li>
+      </ul>
+
+      <div class="stamp-wrap" id="stampWrap" role="button" tabindex="0" aria-label="A blank approval stamp. Stamp it?">
+        <div class="stamp" id="stamp">VALIDATED</div>
+        <div class="accuracy" id="accuracy"></div>
+        <div class="stamp-hint">stamp it →</div>
+      </div>
+    </section>
+
+    <!-- ============ PAGE 5: PROJECT — GLOBAL WATER CRISIS ============ -->
+    <section class="page" aria-label="Project: Global Water Crisis">
+      <div class="page-back" data-label="page 5 / 10"></div>
+      <div class="proj-text">
+        <h2 class="lab-header">Specimen 01 — Global Water Crisis</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">D3.js</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">HTML/CSS</span><span class="tag">May 2026</span></div>
+        <ul class="notes-list">
+          <li>Full EDA across a 30-country dataset spanning water access, sanitation, GDP, and mortality indicators</li>
+          <li>Built an interactive scrollytelling visualization in D3.js — choropleth maps, scatter plots, and trend lines</li>
+          <li>Engineered the whole pipeline myself: cleaning, normalization, feature derivation</li>
+          <li>Packaged it into a narrative arc for a DS-451 deliverable (report, slides, dataset)</li>
+        </ul>
+        <div class="droplet" id="droplet" role="button" tabindex="0" aria-label="A water droplet doodle. Tap for a fact.">
+          <svg viewBox="0 0 24 32"><path fill="#3A538C" opacity=".5" d="M12 0C12 0 2 14 2 21a10 10 0 0020 0C22 14 12 0 12 0Z"/></svg>
+        </div>
+        <div class="secret-note" id="dropletNote">fun fact: this dataset had more missing values than my sleep schedule has consistent hours.</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
+    </section>
+
+    <!-- ============ PAGE 6: PROJECT — SALES & REVENUE EDA ============ -->
+    <section class="page" aria-label="Project: Sales and Revenue EDA Dashboard">
+      <div class="page-back" data-label="page 6 / 10"></div>
+      <div class="proj-text">
+        <h2 class="lab-header">Specimen 02 — Sales &amp; Revenue EDA Dashboard</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">Tableau</span><span class="tag">Seaborn</span><span class="tag">March 2026</span></div>
+        <ul class="notes-list">
+          <li>End-to-end EDA on multi-store retail sales — distributions, seasonal trends, revenue anomalies by category and region</li>
+          <li>Wrote SQL queries for cohort-level customer segmentation and period-over-period revenue comparisons</li>
+          <li>Built an interactive Tableau dashboard: monthly revenue trends, top-performing SKUs, regional heatmaps</li>
+        </ul>
+        <div class="coffee-ring" id="ring" role="button" tabindex="0" aria-label="A coffee ring stain. Tap it.">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#7A4A1F" stroke-width="4"/></svg>
+        </div>
+        <div class="secret-note" id="ringNote">translation: I now have strong opinions about pivot tables.</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
+    </section>
+
+    <!-- ============ PAGE 7: PROJECT — CHURN PREDICTOR ============ -->
+    <section class="page" aria-label="Project: Churn Predictor">
+      <div class="page-back" data-label="page 7 / 10"></div>
+      <div class="proj-text">
+        <h2 class="lab-header">Specimen 03 — Churn Predictor</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">Nov 2025 – Jan 2026</span></div>
+        <ul class="notes-list">
+          <li>Built a churn classification model with feature engineering, cross-validation, and pipeline optimization</li>
+          <li>Used SQL-based segmentation logic to flag at-risk customer cohorts for targeted retention</li>
+          <li>Automated the scoring pipeline for scalable batch inference on new customer data</li>
+        </ul>
+        <div class="churn-row">
+          <span class="customer" id="customer">🙂</span>
+          <button class="retain-btn" id="retainBtn">retain customer</button>
+        </div>
+        <div class="secret-note" id="churnNote">42% retention success on the first try — the model's, not mine.</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
+    </section>
+
+    <!-- ============ PAGE 8: SIDE QUESTS ============ -->
+    <section class="page" aria-label="Side projects">
+      <div class="page-back" data-label="page 8 / 10"></div>
+      <h2 class="lab-header">Side Quests</h2>
+
+      <div class="subhead">SoundMate — AI Playlist Generator</div>
+      <div class="tag-row"><span class="tag">Django</span><span class="tag">Spotify API</span><span class="tag">NLP</span><span class="tag">Sentiment Analysis</span><span class="tag">Nov – Dec 2025</span></div>
+      <ul class="notes-list">
+        <li>NLP sentiment analysis on user text, classifying mood signals to drive personalized recommendations</li>
+        <li>Integrated the Spotify API to pull track metadata and generate playlists in real time</li>
+      </ul>
+      <div class="play-btn" id="playBtn" role="button" tabindex="0" aria-label="Play button. Tap for music notes.">▶</div>
+
+      <div class="subhead">Luminate — AI Career Counselor &amp; Job Platform</div>
+      <div class="tag-row"><span class="tag">Flask</span><span class="tag">React</span><span class="tag">PostgreSQL</span><span class="tag">NLP</span><span class="tag">Mar – Apr 2024</span></div>
+      <ul class="notes-list">
+        <li>Built a semantic skill-matching engine mapping candidate profiles to job requirements</li>
+        <li>Engineered Flask + React + PostgreSQL backend for data ingestion and real-time dashboards</li>
+        <li>Designed data architecture to track user interactions and career-progression metrics</li>
+      </ul>
+    </section>
+
+    <!-- ============ PAGE 9: FIELD SAMPLES & BADGES ============ -->
+    <section class="page" aria-label="Research, certifications and leadership">
+      <div class="page-back" data-label="page 9 / 10"></div>
+      <div class="page-scroll">
+        <h2 class="lab-header">Field Samples &amp; Badges</h2>
+        <p class="lab-meta">Research contributed as researcher/developer — co-authored, presented by collaborators.</p>
+        <div class="sample-list" id="sampleList"></div>
+        <div class="subhead">Badges collected</div>
+        <div class="badge-grid" id="badgeGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============ PAGE 10: CONTACT ============ -->
+    <section class="page" aria-label="Contact">
+      <div class="page-back" data-label="back cover"></div>
+      <h2 class="lab-header">Get In Touch</h2>
+      <p class="lab-body">If any of this was interesting, useful, or at least mildly amusing — I'd love to hear from you.</p>
+      <div class="contact-grid">
+        <div>✉️ <a href="mailto:arehman092004@gmail.com">arehman092004@gmail.com</a></div>
+        <div>🔗 <a href="https://linkedin.com/in/abdul-rehman-faisal-2a680b297" target="_blank" rel="noopener">linkedin.com/in/abdul-rehman-faisal-2a680b297</a></div>
+        <div>💻 <a href="https://github.com/ARFaisal-Rehman" target="_blank" rel="noopener">github.com/ARFaisal-Rehman</a></div>
+        <div>📍 Lahore, Pakistan</div>
+      </div>
+      <span class="signature">— Abdul Rehman Faisal</span>
+      <div class="hire-stamp-wrap" id="hireWrap" role="button" tabindex="0" aria-label="An approval stamp. Stamp it?">
+        <div class="hire-stamp" id="hireStamp">APPROVED FOR HIRE</div>
+      </div>
+    </section>
+
+  </div>
+
+  <button class="flip-btn flip-prev" id="prevBtn" aria-label="Previous page">←</button>
+  <button class="flip-btn flip-next" id="nextBtn" aria-label="Next page">→</button>
+
+  <div class="mascot" id="mascot" role="button" tabindex="0" aria-label="A small coffee mug. Say hi.">
+    <svg viewBox="0 0 100 100">
+      <g class="steam" stroke="#A0937E" stroke-width="3" fill="none" stroke-linecap="round">
+        <path d="M40 28c-4-6 4-10 0-16"/>
+        <path d="M58 28c-4-6 4-10 0-16"/>
+      </g>
+      <rect x="22" y="38" width="48" height="34" rx="6" fill="#F2E8D5" stroke="#2E2A24" stroke-width="3"/>
+      <path d="M70 46h10a8 8 0 0 1 0 16H70" fill="none" stroke="#2E2A24" stroke-width="3"/>
+      <circle class="eye" cx="36" cy="54" r="3.5" fill="#2E2A24"/>
+      <circle class="eye" cx="54" cy="54" r="3.5" fill="#2E2A24"/>
+      <path d="M36 64q9 6 18 0" stroke="#2E2A24" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="speech" id="speech">don't talk to me before 9am.</div>
+  </div>
+</div>
+
+<script>
+  /* ---------- helper: click + keyboard ---------- */
+  function bind(el, fn){
+    if(!el) return;
+    el.addEventListener('click', fn);
+    el.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); fn(); } });
+  }
+
+  /* ---------- page flip (N pages) ---------- */
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const total = pages.length;
+  pages.forEach((p,i)=> p.style.zIndex = total - i);
+  let current = 0, animating = false;
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progress = document.getElementById('progress');
+
+  function updateUI(){
+    progress.textContent = (current+1) + ' / ' + total;
+    prevBtn.dataset.hidden = current === 0;
+    nextBtn.dataset.hidden = current === total - 1;
+  }
+  function flipNext(){
+    if(current >= total-1 || animating) return;
+    animating = true;
+    const p = pages[current];
+    p.classList.add('flipped');
+    setTimeout(()=>{ p.style.visibility='hidden'; p.style.pointerEvents='none'; current++; animating=false; updateUI(); }, 1000);
+  }
+  function flipPrev(){
+    if(current <= 0 || animating) return;
+    animating = true;
+    current--;
+    const p = pages[current];
+    p.style.visibility='visible'; p.style.pointerEvents='auto';
+    void p.offsetWidth;
+    p.classList.remove('flipped');
+    setTimeout(()=>{ animating=false; updateUI(); }, 1000);
+  }
+  prevBtn.addEventListener('click', flipPrev);
+  nextBtn.addEventListener('click', flipNext);
+  window.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowRight') flipNext();
+    if(e.key === 'ArrowLeft') flipPrev();
+  });
+  let wheelLock = false;
+  window.addEventListener('wheel', e=>{
+    if(wheelLock) return;
+    wheelLock = true; setTimeout(()=> wheelLock=false, 900);
+    const d = e.deltaY !== 0 ? e.deltaY : e.deltaX;
+    if(d > 12) flipNext(); else if(d < -12) flipPrev();
+  }, {passive:true});
+  let touchX = null;
+  window.addEventListener('touchstart', e=> touchX = e.touches[0].clientX, {passive:true});
+  window.addEventListener('touchend', e=>{
+    if(touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if(dx < -40) flipNext(); else if(dx > 40) flipPrev();
+    touchX = null;
+  }, {passive:true});
+  updateUI();
+
+  /* ---------- easter egg: cover coffee stain ---------- */
+  const stain = document.getElementById('stain');
+  const secretNote = document.getElementById('secretNote');
+  bind(stain, ()=>{ stain.classList.toggle('spread'); secretNote.classList.toggle('show'); });
+
+  /* ---------- easter egg: paperclip -> sticky note ---------- */
+  const clip = document.getElementById('clip');
+  const sticky = document.getElementById('sticky');
+  bind(clip, ()=>{ clip.classList.add('off'); sticky.classList.add('dropped'); });
+
+  /* ---------- easter egg: dog-ear ---------- */
+  const dogear = document.getElementById('dogear');
+  const secretPanel = document.getElementById('secretPanel');
+  bind(dogear, ()=>{ dogear.classList.toggle('open'); secretPanel.classList.toggle('show'); });
+
+  /* ---------- skills flip cards ---------- */
+  const skills = [
+    { title:'Languages & Querying', chips:'Python · SQL · C++ · HTML/CSS', joke:'also fluent in Stack Overflow.' },
+    { title:'Data Analysis & EDA', chips:'Pandas · NumPy · Scikit-learn · Excel · Statistical Analysis', joke:'yes, even Excel. especially Excel.' },
+    { title:'Visualization & BI', chips:'Tableau · Power BI · Matplotlib · Seaborn · Plotly · D3.js', joke:'I make numbers look pretty so people listen to them.' },
+    { title:'ML & AI', chips:'TensorFlow · PyTorch · Deep Learning · NLP · Computer Vision', joke:"current relationship status: it's complicated (with my GPU)." },
+    { title:'Databases & Cloud', chips:'PostgreSQL · MySQL · SQLite · AWS', joke:'I promise I closed all my connections. probably.' },
+    { title:'Tools & Frameworks', chips:'Git · GitHub · Jupyter · Flask · Django · React · VS Code', joke:"git commit -m 'fixed it (for real this time)'" }
+  ];
+  const skillsGrid = document.getElementById('skillsGrid');
+  skills.forEach(s=>{
+    const card = document.createElement('div');
+    card.className = 'flip-card'; card.tabIndex = 0; card.setAttribute('role','button');
+    card.setAttribute('aria-label', s.title + '. Tap to flip.');
+    card.innerHTML = `<div class="flip-inner">
+        <div class="flip-face flip-front"><h4>${s.title}</h4><div class="chips">${s.chips}</div></div>
+        <div class="flip-face flip-back">${s.joke}</div>
+      </div>`;
+    bind(card, ()=> card.classList.toggle('is-flipped'));
+    skillsGrid.appendChild(card);
+  });
+
+  /* ---------- experience stamp ---------- */
+  const stampWrap = document.getElementById('stampWrap');
+  const stamp = document.getElementById('stamp');
+  const accuracy = document.getElementById('accuracy');
+  let stamped = false;
+  bind(stampWrap, ()=>{
+    if(stamped) return;
+    stamped = true;
+    stamp.classList.add('stamped');
+    let n = 0;
+    const target = 99.93;
+    const step = ()=>{
+      n += target/24;
+      if(n >= target){ n = target; accuracy.textContent = n.toFixed(2)+'%'; return; }
+      accuracy.textContent = n.toFixed(2)+'%';
+      requestAnimationFrame(step);
+    };
+    step();
+  });
+
+  /* ---------- water crisis droplet ---------- */
+  bind(document.getElementById('droplet'), ()=> document.getElementById('dropletNote').classList.toggle('show'));
+
+  /* ---------- sales coffee ring ---------- */
+  bind(document.getElementById('ring'), ()=> document.getElementById('ringNote').classList.toggle('show'));
+
+  /* ---------- churn customer ---------- */
+  const customer = document.getElementById('customer');
+  const churnNote = document.getElementById('churnNote');
+  bind(document.getElementById('retainBtn'), ()=>{
+    if(customer.classList.contains('left')){
+      customer.classList.remove('left');
+      customer.textContent = '🙂';
+      churnNote.classList.remove('show');
+    } else {
+      customer.classList.add('left');
+      customer.textContent = '🚶';
+      setTimeout(()=> churnNote.classList.add('show'), 600);
+    }
+  });
+
+  /* ---------- soundmate play button ---------- */
+  bind(document.getElementById('playBtn'), (e)=>{
+    const btn = document.getElementById('playBtn');
+    for(let i=0;i<3;i++){
+      const note = document.createElement('span');
+      note.className = 'note-float';
+      note.textContent = i % 2 === 0 ? '♪' : '♫';
+      note.style.setProperty('--dx', (Math.random()*40-20)+'px');
+      note.style.left = (50 + (Math.random()*20-10)) + '%';
+      note.style.animationDelay = (i*0.15)+'s';
+      btn.appendChild(note);
+      setTimeout(()=> note.remove(), 2000);
+    }
+  });
+
+  /* ---------- field samples & badges ---------- */
+  const samples = [
+    'Retail Sales Forecasting: Hierarchical Ensemble Framework for Multi-Store Prediction',
+    'Fashion Recommendation System Using Deep Learning on Image Data',
+    'Wildfire Detection Using Satellite Images with EfficientNetV2-S',
+    'Real-Time Recognition of American Sign Language Alphabet Using Lightweight CNN',
+    'Hate Speech Detection Using a BERT-Based Text Classifier'
+  ];
+  const sampleList = document.getElementById('sampleList');
+  samples.forEach(s=>{
+    const card = document.createElement('div');
+    card.className = 'sample-card';
+    card.textContent = s;
+    sampleList.appendChild(card);
+  });
+
+  const badges = [
+    'Deloitte Data Analytics Job Simulation — Apr 2026',
+    'McKinsey Forward Program — Aug 2025',
+    'Treasurer, SPIE.OPTICA GIKI — 2023–Present',
+    'Captain, GCU Badminton Team — 2021–2023'
+  ];
+  const badgeGrid = document.getElementById('badgeGrid');
+  badges.forEach(b=>{
+    const el = document.createElement('div');
+    el.className = 'badge'; el.tabIndex = 0; el.setAttribute('role','button');
+    el.setAttribute('aria-label', b + '. Tap for a sparkle.');
+    el.textContent = b;
+    bind(el, ()=>{ el.classList.remove('shine'); requestAnimationFrame(()=> el.classList.add('shine')); });
+    badgeGrid.appendChild(el);
+  });
+
+  /* ---------- contact hire stamp ---------- */
+  const hireWrap = document.getElementById('hireWrap');
+  const hireStamp = document.getElementById('hireStamp');
+  let hired = false;
+  bind(hireWrap, ()=>{ if(!hired){ hired = true; hireStamp.classList.add('stamped'); } });
+
+  /* ---------- mascot ---------- */
+  const mascot = document.getElementById('mascot');
+  const speech = document.getElementById('speech');
+  const lines = [
+    "don't talk to me before 9am.",
+    "have you tried turning it off and on again?",
+    "p < 0.05... probably.",
+    "this mug is 90% coffee, 10% emotional support.",
+    "currently overfitting my sleep schedule."
+  ];
+  bind(mascot, ()=>{
+    mascot.classList.remove('bounce');
+    requestAnimationFrame(()=> mascot.classList.add('bounce'));
+    speech.textContent = lines[Math.floor(Math.random()*lines.length)];
+    speech.classList.add('show');
+    setTimeout(()=> speech.classList.remove('show'), 2200);
+  });
+</script>
+
 </body>
 </html>
