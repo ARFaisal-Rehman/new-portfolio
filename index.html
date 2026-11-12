@@ -4,25 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Field Notes — Abdul Rehman Faisal</title>
-<meta name="description" content="Field notes from a data science student — projects, experience, and a few hidden surprises." />
+<meta name="description" content="Abdul Rehman Faisal: data science student at GIKI. Data analytics internship at Systems Limited, research internship in Potsdam, and leak-free ML projects." />
+<meta property="og:title" content="Field Notes: Abdul Rehman Faisal" />
+<meta property="og:description" content="Data science @ GIKI. Systems Limited data analytics intern. Projects in churn modelling, customer analytics and data storytelling." />
 
-<!--
-  HOW TO MAKE THIS YOURS
-  ======================
-  1) HANDWRITING: every font-family: var(--font-hand) spot is a PLACEHOLDER
-     script font (Caveat). Once you send scanned samples of your own
-     handwriting, swap these for cropped PNG/SVG images of your real
-     writing — title, checkmarks, margin notes, signature on the
-     contact page. Happy to wire that up once you have them.
 
-  2) SCREENSHOTS: each project page has a .polaroid placeholder —
-     drop in <img src="..."> tags where noted.
-
-  3) LINKS: update the contact page (last page) with your real socials —
-     phone number currently omitted on purpose (privacy on a public site).
-
-  4) NAVIGATE: scroll / swipe / arrow keys / on-screen arrows.
--->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,7 +90,7 @@
     color:var(--ink-soft); letter-spacing:.25em; text-transform:uppercase;
   }
 
-  .page-scroll{ height:100%; overflow-y:auto; padding-right:6px; }
+  .page-scroll{ height:100%; overflow-y:auto; padding-right:6px; padding-bottom:64px; }
   .page-scroll::-webkit-scrollbar{ width:4px; }
   .page-scroll::-webkit-scrollbar-thumb{ background:var(--binding); border-radius:4px; }
 
@@ -158,6 +144,10 @@
   }
   .polaroid .frame{ width:100%; aspect-ratio:4/3; background:repeating-linear-gradient(45deg,#d8cdb8,#d8cdb8 6px,#cbbfa6 6px,#cbbfa6 12px); }
   .polaroid .cap{ font-family:var(--font-hand); font-size:.95rem; text-align:center; margin-top:6px; color:var(--ink-soft); }
+  .polaroid .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .polaroid .cap a{ color:var(--pen-blue); }
+  .repo-link{ display:inline-block; margin-top:10px; font-family:var(--font-mono); font-size:.75rem; color:var(--pen-blue); text-decoration:none; border-bottom:1px dashed var(--pen-blue); }
+  .repo-link:hover{ color:var(--pen-red); border-color:var(--pen-red); }
   .tape{ position:absolute; width:54px; height:20px; background:rgba(255,255,255,.55); top:-8px; left:50%; transform:translateX(-50%) rotate(-3deg); box-shadow:0 1px 2px rgba(0,0,0,.1); }
 
   /* ===================== COVER PAGE ===================== */
@@ -282,7 +272,7 @@
   .flip-next{ right:clamp(14px,3vw,28px); }
   .flip-prev{ left:clamp(46px,7vw,86px); }
 
-  .mascot{ position:absolute; left:clamp(44px,6vw,70px); bottom:clamp(58px,9vh,90px); width:clamp(66px,9vw,92px); z-index:35; cursor:pointer; transition:transform .25s ease; }
+  .mascot{ position:absolute; right:clamp(78px,10vw,110px); bottom:clamp(10px,2vh,20px); width:clamp(50px,6.5vw,68px); z-index:35; cursor:pointer; transition:transform .25s ease; }
   .mascot:hover{ transform:translateY(-4px) rotate(-4deg); }
   .mascot.bounce{ animation:mascotBounce .6s ease; }
   @keyframes mascotBounce{ 0%,100%{transform:translateY(0) rotate(0);} 30%{transform:translateY(-14px) rotate(-8deg);} 55%{transform:translateY(2px) rotate(4deg);} }
@@ -292,20 +282,20 @@
   .mascot .steam path:nth-child(2){ animation-delay:.4s; }
   @keyframes steam{ 0%{opacity:0; transform:translateY(4px) scale(.9);} 40%{opacity:.7;} 100%{opacity:0; transform:translateY(-10px) scale(1.1);} }
   .speech{
-    position:absolute; bottom:110%; left:50%; transform:translateX(-50%) translateY(6px) scale(.9);
+    position:absolute; bottom:110%; left:50%; transform:translateX(-70%) translateY(6px) scale(.9);
     background:var(--paper); border:1px solid var(--ink-soft); border-radius:10px; padding:8px 12px;
     font-family:var(--font-hand); font-size:1rem; white-space:nowrap; box-shadow:2px 3px 8px rgba(0,0,0,.15);
     opacity:0; transition:opacity .3s ease, transform .3s ease; pointer-events:none;
   }
-  .speech.show{ opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
+  .speech.show{ opacity:1; transform:translateX(-70%) translateY(0) scale(1); }
 
   /* ===================== RESPONSIVE ===================== */
   @media (max-width:640px){
     .stage{ aspect-ratio:3/4.6; width:92vw; }
-    .flip-prev{ left:clamp(14px,3vw,28px); bottom:auto; top:14px; }
+    .flip-prev{ left:clamp(14px,3vw,28px); bottom:14px; top:auto; }
     .flip-next{ bottom:14px; }
     .sticky-wrap{ top:auto; bottom:120px; right:14px; }
-    .mascot{ left:16px; bottom:16px; width:58px; }
+    .mascot{ right:16px; bottom:66px; width:44px; }
     .polaroid{ position:static; margin:14px auto; transform:rotate(0deg); width:60%; }
     .proj-text{ max-width:100%; }
     .skills-grid{ grid-template-columns:1fr 1fr; }
@@ -351,29 +341,29 @@
       <div class="nav-hint">scroll · swipe · or press → <span class="arrow">➜</span></div>
     </section>
 
-    <!-- ============ PAGE 2: ABOUT ============ -->
+    <!-- ============ PAGE: ABOUT ============ -->
     <section class="page" aria-label="About">
-      <div class="page-back" data-label="page 2 / 10"></div>
+      <div class="page-back" data-label="page 2 / 11"></div>
       <h2 class="lab-header">Subject: Abdul Rehman Faisal</h2>
       <div class="lab-meta">
-        <b>FIELD:</b> BS Data Science, GIKI (2023 – Present)<br>
+        <b>FIELD:</b> BS Data Science, GIKI (2023 – 2027)<br>
         <b>BASE:</b> Lahore, Pakistan<br>
         <b>STATUS:</b>
         <span class="check">☑</span> Caffeinated &nbsp;
         <span class="check">☑</span> Curious &nbsp;
-        <span class="check">☑</span> McKinsey-approved &nbsp;
+        <span class="check">☑</span> Looking for data roles &nbsp;
         <span class="check">☐</span> Sleeping on schedule
       </div>
 
       <p class="lab-body">
         Most of my week goes into cleaning data, building models, and occasionally
-        negotiating with scikit-learn until it cooperates. Last summer I took that
-        habit abroad — a research internship in Potsdam, Germany, where a computer
-        vision model of mine hit <span class="highlight" tabindex="0">99.93% validation accuracy<span class="tip">(I will mention this at every opportunity)</span></span>.
-        McKinsey's Forward Program apparently agrees I'm decent at solving problems,
-        and somewhere along the way I picked up enough front-end curiosity to build
-        this very notebook. If you're hiring for a data role — or just enjoy clicking
-        on things — you're in the right place.
+        negotiating with scikit-learn until it cooperates. This summer I did it for real at
+        <span class="highlight" tabindex="0">Systems Limited<span class="tip">(SQL, ETL and SSIS, the unglamorous parts that actually run businesses)</span></span>
+        as a data analytics intern. The summer before, I was in Potsdam, Germany, on a research
+        internship building a computer vision model for acne detection.
+        I care about models that hold up outside a notebook: my churn project went from a
+        suspicious 100% to an honest 0.75 ROC-AUC once I fixed a leak in the labels.
+        If you're hiring for a data role, or just enjoy clicking on things, you're in the right place.
       </p>
 
       <div class="sticky-wrap">
@@ -389,125 +379,160 @@
       <div class="secret-panel" id="secretPanel">also fluent in turning<br>coffee into code.</div>
     </section>
 
-    <!-- ============ PAGE 3: SKILLS ============ -->
+    <!-- ============ PAGE: SKILLS ============ -->
     <section class="page" aria-label="Skills">
-      <div class="page-back" data-label="page 3 / 10"></div>
+      <div class="page-back" data-label="page 3 / 11"></div>
       <h2 class="lab-header">The Toolbox</h2>
       <p class="skills-hint">tap a card to see what I really think →</p>
       <div class="skills-grid" id="skillsGrid"></div>
     </section>
 
-    <!-- ============ PAGE 4: EXPERIENCE ============ -->
-    <section class="page" aria-label="Experience">
-      <div class="page-back" data-label="page 4 / 10"></div>
-      <h2 class="lab-header">Field Assignment: Potsdam, Germany</h2>
+    <!-- ============ PAGE: EXPERIENCE — SYSTEMS LIMITED ============ -->
+    <section class="page" aria-label="Experience: Systems Limited">
+      <div class="page-back" data-label="page 4 / 11"></div>
+      <h2 class="lab-header">Field Assignment: Lahore</h2>
       <div class="lab-meta">
-        <b>ROLE:</b> Research Intern — AI &amp; Data Science<br>
-        <b>ORG:</b> University of Europe for Applied Sciences<br>
-        <b>DURATION:</b> May – Aug 2025
+        <b>ROLE:</b> Data Analytics Intern<br>
+        <b>ORG:</b> Systems Limited<br>
+        <b>DURATION:</b> Jun – Aug 2026
       </div>
       <ul class="notes-list">
-        <li>Built computer vision models reaching 99.93% validation accuracy — cut the error rate by 60%+ through systematic hyperparameter tuning</li>
-        <li>Automated end-to-end ETL pipelines for image preprocessing, cutting manual prep time by roughly 70%</li>
-        <li>Ran EDA on large datasets with SQL &amp; Pandas — catching data quality issues before they became data quality emergencies</li>
-        <li>Wrote analytical reports translating model results for non-technical stakeholders (no jargon, mostly)</li>
-        <li>Collaborated with international researchers across disciplines, somehow without a single merge-conflict disaster</li>
+        <li>Wrote SQL to query, transform and check data</li>
+        <li>Built ETL workflows in SQL Server Integration Services (SSIS)</li>
+        <li>Learned what production data actually looks like: late, messy, and somebody's top priority</li>
       </ul>
 
-      <div class="stamp-wrap" id="stampWrap" role="button" tabindex="0" aria-label="A blank approval stamp. Stamp it?">
-        <div class="stamp" id="stamp">VALIDATED</div>
+      <div class="stamp-wrap" id="stampWrap" role="button" tabindex="0" aria-label="A blank stamp. Stamp it?">
+        <div class="stamp" id="stamp">ETL: SHIPPED</div>
         <div class="accuracy" id="accuracy"></div>
         <div class="stamp-hint">stamp it →</div>
       </div>
     </section>
 
-    <!-- ============ PAGE 5: PROJECT — GLOBAL WATER CRISIS ============ -->
-    <section class="page" aria-label="Project: Global Water Crisis">
-      <div class="page-back" data-label="page 5 / 10"></div>
+    <!-- ============ PAGE: EXPERIENCE — POTSDAM ============ -->
+    <section class="page" aria-label="Experience: University of Europe for Applied Sciences">
+      <div class="page-back" data-label="page 5 / 11"></div>
+      <h2 class="lab-header">Field Assignment: Potsdam, Germany</h2>
+      <div class="lab-meta">
+        <b>ROLE:</b> Research Intern — AI &amp; Data Science<br>
+        <b>ORG:</b> University of Europe for Applied Sciences<br>
+        <b>DURATION:</b> Jun – Aug 2025
+      </div>
+      <ul class="notes-list">
+        <li>Project: <i>Deep Learning for Acne Detection: A Computer Vision-Based Approach for Dermatological Assistance</i></li>
+        <li>Implemented the code: preprocessing, augmentation and CNN models (MobileNetV2, ResNet)</li>
+        <li>~87% detection accuracy; precision and recall above 84% across lighting conditions</li>
+        <li>Drafted the project report and research paper summarising findings and methodology</li>
+              </ul>
+    </section>
+
+    <!-- ============ PAGE: PROJECT — RISK RADAR ============ -->
+    <section class="page" aria-label="Project: Risk Radar">
+      <div class="page-back" data-label="page 6 / 11"></div>
       <div class="proj-text">
-        <h2 class="lab-header">Specimen 01 — Global Water Crisis</h2>
-        <div class="tag-row"><span class="tag">Python</span><span class="tag">D3.js</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">HTML/CSS</span><span class="tag">May 2026</span></div>
+        <h2 class="lab-header">Specimen 01 — Risk Radar</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Flask</span><span class="tag">2025 – 2026</span></div>
         <ul class="notes-list">
-          <li>Full EDA across a 30-country dataset spanning water access, sanitation, GDP, and mortality indicators</li>
-          <li>Built an interactive scrollytelling visualization in D3.js — choropleth maps, scatter plots, and trend lines</li>
-          <li>Engineered the whole pipeline myself: cleaning, normalization, feature derivation</li>
-          <li>Packaged it into a narrative arc for a DS-451 deliverable (report, slides, dataset)</li>
+          <li>Churn intelligence on 400K+ retail transactions: who is about to leave, why, and what to do</li>
+          <li>Leak-free labels: features from history only, churn judged on the 60 days that follow</li>
+          <li>4 models compared with 5-fold stratified CV; best test ROC-AUC 0.746</li>
+          <li>Flags ~GBP 985K of revenue tied to high-risk customers, with per-customer reasons and actions</li>
         </ul>
+        <a class="repo-link" href="https://github.com/ARFaisal-Rehman/Churn-Predictor" target="_blank" rel="noopener">view the code →</a>
+        <div class="churn-row">
+          <span class="customer" id="customer">🙂</span>
+          <button class="retain-btn" id="retainBtn">retain customer</button>
+        </div>
+        <div class="secret-note" id="churnNote">version 1 scored 100%. that's not a flex, that's a bug. version 2 is honest.</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/risk-radar-auc.png" alt="Bar chart of test ROC-AUC for four churn models, gradient boosting highest at 0.746" loading="lazy"></div><div class="cap">honest numbers</div></div>
+    </section>
+
+    <!-- ============ PAGE: PROJECT — DS-341 ============ -->
+    <section class="page" aria-label="Project: Customer Behaviour Analytics">
+      <div class="page-back" data-label="page 7 / 11"></div>
+      <div class="proj-text">
+        <h2 class="lab-header">Specimen 02 — Customer Behaviour Analytics</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">K-Means</span><span class="tag">Apriori</span><span class="tag">Flask</span><span class="tag">Dec 2025</span></div>
+        <ul class="notes-list">
+          <li>Data-mining study of UK e-commerce data: classification, clustering and association rules</li>
+          <li>Found and fixed label leakage that had every model scoring 1.0; realistic ROC-AUC now 0.71</li>
+          <li>Four customer segments, from loyal high-value buyers to lapsing one-timers</li>
+          <li>Product pairs with 10x lift turned into bundle recommendations</li>
+        </ul>
+        <a class="repo-link" href="https://github.com/ARFaisal-Rehman/ds341-customer-analytics" target="_blank" rel="noopener">view the code →</a>
+        <div class="coffee-ring" id="ring" role="button" tabindex="0" aria-label="A coffee ring stain. Tap it.">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#7A4A1F" stroke-width="4"/></svg>
+        </div>
+        <div class="secret-note" id="ringNote">people who buy the red alarm clock also buy the green one. every time.</div>
+      </div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/ds341-clusters.jpg" alt="PCA scatter plot of four customer segments" loading="lazy"></div><div class="cap">4 kinds of customer</div></div>
+    </section>
+
+    <!-- ============ PAGE: PROJECT — GLOBAL WATER CRISIS ============ -->
+    <section class="page" aria-label="Project: Global Water Crisis">
+      <div class="page-back" data-label="page 8 / 11"></div>
+      <div class="proj-text">
+        <h2 class="lab-header">Specimen 03 — Global Water Crisis</h2>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">D3.js</span><span class="tag">Pandas</span><span class="tag">HTML/CSS</span><span class="tag">May 2026</span></div>
+        <ul class="notes-list">
+          <li>EDA across a 30-country dataset spanning water access, sanitation, GDP and mortality</li>
+          <li>Interactive scrollytelling story in D3.js: choropleth maps, scatter plots and trend lines</li>
+          <li>Built the pipeline end to end: cleaning, normalisation, feature derivation</li>
+          <li>DS-451 deliverable with report, slides and dataset</li>
+        </ul>
+        <a class="repo-link" href="https://arfaisal-rehman.github.io/DS-451-Project/" target="_blank" rel="noopener">read the live story →</a>
         <div class="droplet" id="droplet" role="button" tabindex="0" aria-label="A water droplet doodle. Tap for a fact.">
           <svg viewBox="0 0 24 32"><path fill="#3A538C" opacity=".5" d="M12 0C12 0 2 14 2 21a10 10 0 0020 0C22 14 12 0 12 0Z"/></svg>
         </div>
         <div class="secret-note" id="dropletNote">fun fact: this dataset had more missing values than my sleep schedule has consistent hours.</div>
       </div>
-      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/water-crisis.jpg" alt="Opening screen of the Dying of Thirst data story" loading="lazy"></div><div class="cap">live on the web</div></div>
     </section>
 
-    <!-- ============ PAGE 6: PROJECT — SALES & REVENUE EDA ============ -->
-    <section class="page" aria-label="Project: Sales and Revenue EDA Dashboard">
-      <div class="page-back" data-label="page 6 / 10"></div>
-      <div class="proj-text">
-        <h2 class="lab-header">Specimen 02 — Sales &amp; Revenue EDA Dashboard</h2>
-        <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">Tableau</span><span class="tag">Seaborn</span><span class="tag">March 2026</span></div>
-        <ul class="notes-list">
-          <li>End-to-end EDA on multi-store retail sales — distributions, seasonal trends, revenue anomalies by category and region</li>
-          <li>Wrote SQL queries for cohort-level customer segmentation and period-over-period revenue comparisons</li>
-          <li>Built an interactive Tableau dashboard: monthly revenue trends, top-performing SKUs, regional heatmaps</li>
-        </ul>
-        <div class="coffee-ring" id="ring" role="button" tabindex="0" aria-label="A coffee ring stain. Tap it.">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="#7A4A1F" stroke-width="4"/></svg>
-        </div>
-        <div class="secret-note" id="ringNote">translation: I now have strong opinions about pivot tables.</div>
-      </div>
-      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
-    </section>
-
-    <!-- ============ PAGE 7: PROJECT — CHURN PREDICTOR ============ -->
-    <section class="page" aria-label="Project: Churn Predictor">
-      <div class="page-back" data-label="page 7 / 10"></div>
-      <div class="proj-text">
-        <h2 class="lab-header">Specimen 03 — Churn Predictor</h2>
-        <div class="tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">Nov 2025 – Jan 2026</span></div>
-        <ul class="notes-list">
-          <li>Built a churn classification model with feature engineering, cross-validation, and pipeline optimization</li>
-          <li>Used SQL-based segmentation logic to flag at-risk customer cohorts for targeted retention</li>
-          <li>Automated the scoring pipeline for scalable batch inference on new customer data</li>
-        </ul>
-        <div class="churn-row">
-          <span class="customer" id="customer">🙂</span>
-          <button class="retain-btn" id="retainBtn">retain customer</button>
-        </div>
-        <div class="secret-note" id="churnNote">42% retention success on the first try — the model's, not mine.</div>
-      </div>
-      <div class="polaroid"><div class="tape"></div><div class="frame"></div><div class="cap">// drop a screenshot here</div></div>
-    </section>
-
-    <!-- ============ PAGE 8: SIDE QUESTS ============ -->
+    <!-- ============ PAGE: SIDE QUESTS ============ -->
     <section class="page" aria-label="Side projects">
-      <div class="page-back" data-label="page 8 / 10"></div>
-      <h2 class="lab-header">Side Quests</h2>
+      <div class="page-back" data-label="page 9 / 11"></div>
+      <div class="page-scroll">
+        <h2 class="lab-header">Side Quests</h2>
 
-      <div class="subhead">SoundMate — AI Playlist Generator</div>
-      <div class="tag-row"><span class="tag">Django</span><span class="tag">Spotify API</span><span class="tag">NLP</span><span class="tag">Sentiment Analysis</span><span class="tag">Nov – Dec 2025</span></div>
-      <ul class="notes-list">
-        <li>NLP sentiment analysis on user text, classifying mood signals to drive personalized recommendations</li>
-        <li>Integrated the Spotify API to pull track metadata and generate playlists in real time</li>
-      </ul>
-      <div class="play-btn" id="playBtn" role="button" tabindex="0" aria-label="Play button. Tap for music notes.">▶</div>
+        <div class="subhead">GIKIVault — Event-Driven Campus Cloud on AWS</div>
+        <div class="tag-row"><span class="tag">AWS</span><span class="tag">Lambda</span><span class="tag">SQS</span><span class="tag">RDS</span><span class="tag">Flask</span><span class="tag">Fall 2024</span></div>
+        <ul class="notes-list">
+          <li>Team lead. Scheduled Lambdas ingest 3 public APIs into SQS, processed into PostgreSQL on RDS</li>
+          <li>Served via EC2 behind an ALB and API Gateway; Cognito auth, CloudFront CDN, CloudWatch alarms</li>
+        </ul>
+        <a class="repo-link" href="https://github.com/ARFaisal-Rehman/GIKI-Vault" target="_blank" rel="noopener">architecture →</a>
 
-      <div class="subhead">Luminate — AI Career Counselor &amp; Job Platform</div>
-      <div class="tag-row"><span class="tag">Flask</span><span class="tag">React</span><span class="tag">PostgreSQL</span><span class="tag">NLP</span><span class="tag">Mar – Apr 2024</span></div>
-      <ul class="notes-list">
-        <li>Built a semantic skill-matching engine mapping candidate profiles to job requirements</li>
-        <li>Engineered Flask + React + PostgreSQL backend for data ingestion and real-time dashboards</li>
-        <li>Designed data architecture to track user interactions and career-progression metrics</li>
-      </ul>
+        <div class="subhead">StudyBud — Gamified Study Companion</div>
+        <div class="tag-row"><span class="tag">Flask</span><span class="tag">SQLAlchemy</span><span class="tag">Google Calendar API</span><span class="tag">2025</span></div>
+        <ul class="notes-list">
+          <li>Pomodoros, tasks and spaced-repetition flashcards that earn XP, streaks and achievements</li>
+        </ul>
+        <a class="repo-link" href="https://github.com/ARFaisal-Rehman/studybud" target="_blank" rel="noopener">view the code →</a>
+
+        <div class="subhead">SoundMate — AI Playlist Generator</div>
+        <div class="tag-row"><span class="tag">Django</span><span class="tag">Spotify API</span><span class="tag">NLP</span><span class="tag">Nov – Dec 2025</span></div>
+        <ul class="notes-list">
+          <li>Sentiment analysis on user text to pick a mood, then Spotify API playlists to match</li>
+        </ul>
+        <div class="play-btn" id="playBtn" role="button" tabindex="0" aria-label="Play button. Tap for music notes.">▶</div>
+
+        <div class="subhead">Luminate — AI Career Counselor &amp; Job Platform</div>
+        <div class="tag-row"><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">NLP</span><span class="tag">Mar – Apr 2024</span></div>
+        <ul class="notes-list">
+          <li>Skill-matching engine mapping candidate profiles to job requirements</li>
+        </ul>
+        <a class="repo-link" href="https://github.com/ARFaisal-Rehman/Luminate" target="_blank" rel="noopener">view the code →</a>
+      </div>
     </section>
 
-    <!-- ============ PAGE 9: FIELD SAMPLES & BADGES ============ -->
+    <!-- ============ PAGE: FIELD SAMPLES & BADGES ============ -->
     <section class="page" aria-label="Research, certifications and leadership">
-      <div class="page-back" data-label="page 9 / 10"></div>
+      <div class="page-back" data-label="page 10 / 11"></div>
       <div class="page-scroll">
         <h2 class="lab-header">Field Samples &amp; Badges</h2>
-        <p class="lab-meta">Research contributed as researcher/developer — co-authored, presented by collaborators.</p>
+        <p class="lab-meta">Research projects from the Potsdam internship that I contributed code and analysis to, alongside the student and faculty authors.</p>
         <div class="sample-list" id="sampleList"></div>
         <div class="subhead">Badges collected</div>
         <div class="badge-grid" id="badgeGrid"></div>
@@ -635,7 +660,7 @@
     { title:'Data Analysis & EDA', chips:'Pandas · NumPy · Scikit-learn · Excel · Statistical Analysis', joke:'yes, even Excel. especially Excel.' },
     { title:'Visualization & BI', chips:'Tableau · Power BI · Matplotlib · Seaborn · Plotly · D3.js', joke:'I make numbers look pretty so people listen to them.' },
     { title:'ML & AI', chips:'TensorFlow · PyTorch · Deep Learning · NLP · Computer Vision', joke:"current relationship status: it's complicated (with my GPU)." },
-    { title:'Databases & Cloud', chips:'PostgreSQL · MySQL · SQLite · AWS', joke:'I promise I closed all my connections. probably.' },
+    { title:'Databases & ETL', chips:'SQL Server · SSIS · PostgreSQL · MySQL · SQLite · AWS', joke:'I promise I closed all my connections. probably.' },
     { title:'Tools & Frameworks', chips:'Git · GitHub · Jupyter · Flask · Django · React · VS Code', joke:"git commit -m 'fixed it (for real this time)'" }
   ];
   const skillsGrid = document.getElementById('skillsGrid');
@@ -660,15 +685,7 @@
     if(stamped) return;
     stamped = true;
     stamp.classList.add('stamped');
-    let n = 0;
-    const target = 99.93;
-    const step = ()=>{
-      n += target/24;
-      if(n >= target){ n = target; accuracy.textContent = n.toFixed(2)+'%'; return; }
-      accuracy.textContent = n.toFixed(2)+'%';
-      requestAnimationFrame(step);
-    };
-    step();
+    accuracy.textContent = 'rows moved, nothing dropped';
   });
 
   /* ---------- water crisis droplet ---------- */
@@ -709,11 +726,12 @@
 
   /* ---------- field samples & badges ---------- */
   const samples = [
+    'Deep Learning for Acne Detection: A Computer Vision-Based Approach for Dermatological Assistance (my internship project)',
     'Retail Sales Forecasting: Hierarchical Ensemble Framework for Multi-Store Prediction',
-    'Fashion Recommendation System Using Deep Learning on Image Data',
     'Wildfire Detection Using Satellite Images with EfficientNetV2-S',
-    'Real-Time Recognition of American Sign Language Alphabet Using Lightweight CNN',
-    'Hate Speech Detection Using a BERT-Based Text Classifier'
+    'Hate Speech Detection Using a BERT-Based Text Classifier',
+    'Fashion Recommendation System Using Deep Learning on Image Data',
+    'Real-Time Recognition of American Sign Language Alphabet Using Lightweight CNN'
   ];
   const sampleList = document.getElementById('sampleList');
   samples.forEach(s=>{
@@ -724,10 +742,12 @@
   });
 
   const badges = [
-    'Deloitte Data Analytics Job Simulation — Apr 2026',
-    'McKinsey Forward Program — Aug 2025',
-    'Treasurer, SPIE.OPTICA GIKI — 2023–Present',
-    'Captain, GCU Badminton Team — 2021–2023'
+    'Systems Limited intern — 2026',
+    'UE Potsdam research intern — 2025',
+    'Deloitte Data Analytics sim — 2026',
+    'McKinsey Forward — 2025',
+    'Treasurer, SPIE Optica GIKI',
+    'Captain, GCU Badminton'
   ];
   const badgeGrid = document.getElementById('badgeGrid');
   badges.forEach(b=>{
