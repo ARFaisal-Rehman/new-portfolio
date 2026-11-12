@@ -433,10 +433,10 @@
         <h2 class="lab-header">Specimen 01 — Risk Radar</h2>
         <div class="tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span><span class="tag">Flask</span><span class="tag">2025 – 2026</span></div>
         <ul class="notes-list">
-          <li>Churn intelligence on 400K+ retail transactions: who is about to leave, why, and what to do</li>
+          <li>Churn intelligence on 1M+ retail transactions (UCI Online Retail II): who is about to leave, why, and what to do</li>
           <li>Leak-free labels: features from history only, churn judged on the 60 days that follow</li>
-          <li>4 models compared with 5-fold stratified CV; best test ROC-AUC 0.746</li>
-          <li>Flags ~GBP 985K of revenue tied to high-risk customers, with per-customer reasons and actions</li>
+          <li>Model chosen by forward-chaining CV, then calibrated: out-of-time ROC-AUC 0.755</li>
+          <li>Ranks who to contact by expected value (risk x spend): GBP 29K expected profit vs 25K when ranking by risk alone</li>
         </ul>
         <a class="repo-link" href="https://github.com/ARFaisal-Rehman/Churn-Predictor" target="_blank" rel="noopener">view the code →</a>
         <div class="churn-row">
@@ -445,7 +445,7 @@
         </div>
         <div class="secret-note" id="churnNote">version 1 scored 100%. that's not a flex, that's a bug. version 2 is honest.</div>
       </div>
-      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/risk-radar-auc.png" alt="Bar chart of test ROC-AUC for four churn models, gradient boosting highest at 0.746" loading="lazy"></div><div class="cap">honest numbers</div></div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/risk-radar-quality.jpg" alt="Risk Radar model-quality page: out-of-time ROC-AUC and calibration curve" loading="lazy"></div><div class="cap">honest numbers</div></div>
     </section>
 
     <!-- ============ PAGE: PROJECT — DS-341 ============ -->
@@ -457,8 +457,8 @@
         <ul class="notes-list">
           <li>Data-mining study of UK e-commerce data: classification, clustering and association rules</li>
           <li>Found and fixed label leakage that had every model scoring 1.0; realistic ROC-AUC now 0.71</li>
-          <li>Four customer segments, from loyal high-value buyers to lapsing one-timers</li>
-          <li>Product pairs with 10x lift turned into bundle recommendations</li>
+          <li>Three customer segments; the active high-value quarter brings in 71% of revenue</li>
+          <li>Product pairs with up to 35x lift turned into bundle recommendations</li>
         </ul>
         <a class="repo-link" href="https://github.com/ARFaisal-Rehman/ds341-customer-analytics" target="_blank" rel="noopener">view the code →</a>
         <div class="coffee-ring" id="ring" role="button" tabindex="0" aria-label="A coffee ring stain. Tap it.">
@@ -466,7 +466,7 @@
         </div>
         <div class="secret-note" id="ringNote">people who buy the red alarm clock also buy the green one. every time.</div>
       </div>
-      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/ds341-clusters.jpg" alt="PCA scatter plot of four customer segments" loading="lazy"></div><div class="cap">4 kinds of customer</div></div>
+      <div class="polaroid"><div class="tape"></div><div class="frame"><img src="assets/ds341-segments.jpg" alt="Customer segments page of the DS-341 analytics app" loading="lazy"></div><div class="cap">3 kinds of customer</div></div>
     </section>
 
     <!-- ============ PAGE: PROJECT — GLOBAL WATER CRISIS ============ -->
@@ -476,7 +476,7 @@
         <h2 class="lab-header">Specimen 03 — Global Water Crisis</h2>
         <div class="tag-row"><span class="tag">Python</span><span class="tag">D3.js</span><span class="tag">Pandas</span><span class="tag">HTML/CSS</span><span class="tag">May 2026</span></div>
         <ul class="notes-list">
-          <li>EDA across a 30-country dataset spanning water access, sanitation, GDP and mortality</li>
+          <li>Rebuilt from source: World Bank indicators and WRI Aqueduct water stress for 214 countries</li>
           <li>Interactive scrollytelling story in D3.js: choropleth maps, scatter plots and trend lines</li>
           <li>Built the pipeline end to end: cleaning, normalisation, feature derivation</li>
           <li>DS-451 deliverable with report, slides and dataset</li>
